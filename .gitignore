@@ -1,0 +1,7 @@
+no_commit
+__pycache__*
+.vscode
+*.pyc
+.mypy*
+data/
+output*
