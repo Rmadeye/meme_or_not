@@ -23,8 +23,6 @@ def load_image(image_path: Path) -> Image.Image:
             array = np.array(img)
             pil_img = Image.fromarray(array)
             return pil_img
-    elif image_path.suffix == ".txt":
-        return None
     else:
         raise ValueError(f"Unsupported image format: {image_path.suffix}")
 
@@ -42,7 +40,7 @@ class ImageDataset(Dataset):
         with open(image_dir / "labels.txt", "r") as f:
             for line in f.readlines()[1:]:
                 filename, label = line.strip().split(",")
-                self.data.append((filename, bool(label)))
+                self.data.append((filename, int(bool(label))))
 
     def __len__(self):
         return len(self.data)
