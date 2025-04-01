@@ -7,3 +7,4 @@ data/
 output*
 .coverage*
 *logs*
+models/meme_classifier.ckpt

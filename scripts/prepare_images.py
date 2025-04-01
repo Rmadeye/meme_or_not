@@ -42,10 +42,8 @@ def filter_images(image_dir: Path, output_dir: Path):
                     pil_img.save(
                         output_dir / image_path.with_suffix(".png").name
                     )
-        elif image_path.suffix == ".txt":
-            continue
         else:
-            raise ValueError(f"Unsupported image format: {image_path.suffix}")
+            continue
 
 
 def check_image_size(
@@ -80,6 +78,6 @@ def pad_image_to_minimal_size(
 
 
 if __name__ == "__main__":
-    image_dir = Path("data/crude")
-    output_dir = Path("data/filtered")
+    image_dir = Path("data/2024_crude")
+    output_dir = Path("data/2024_prep")
     filter_images(image_dir, output_dir)
