@@ -2,7 +2,7 @@ import pytest
 from PIL import Image
 import numpy as np
 import torch
-from src.data_prep import load_image, transform_to_tensor, ImageDataset
+from mem_or_not.data_prep import load_image, transform_to_tensor, ImageDataset
 
 
 @pytest.fixture

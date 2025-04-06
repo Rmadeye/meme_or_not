@@ -1,7 +1,7 @@
 import pytest
 import torch
 from torch.utils.data import DataLoader, TensorDataset
-from src.network import MemeClassifier
+from mem_or_not.network import MemeClassifier
 
 
 @pytest.fixture

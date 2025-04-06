@@ -1,4 +1,4 @@
-from src.data_prep import ImageDataset
+from mem_or_not.data_prep import ImageDataset
 
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader, random_split

@@ -3,8 +3,8 @@ import argparse
 from pathlib import Path
 import pytorch_lightning as pl
 
-from src.network import MemeClassifier
-from src.dataloader import ImageDataModule
+from mem_or_not.network import MemeClassifier
+from mem_or_not.dataloader import ImageDataModule
 
 meme_dict = {0: "not meme", 1: "meme"}
 
@@ -42,7 +42,7 @@ def predict(image_dir: Path, model_path: Path):
         predictions, data_module.predict_dataloader()
     ):
         batch = batch[0]  # Unpack the tensor from [[1, 0]] to [1, 0]
-        for logit, path in zip(batch, paths):
+        for _, path in zip(batch, paths):
             percentages = batch * 100
             print(
                 f"Image:{path}, Class: {meme_dict[int(batch.argmax(0))]} "

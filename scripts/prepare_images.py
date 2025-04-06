@@ -4,6 +4,7 @@ from typing import Tuple
 from PIL import Image
 import pillow_heif
 from tqdm import tqdm
+import argparse
 
 
 def filter_images(image_dir: Path, output_dir: Path):
@@ -78,6 +79,25 @@ def pad_image_to_minimal_size(
 
 
 if __name__ == "__main__":
-    image_dir = Path("data/2024_crude")
-    output_dir = Path("data/2024_prep")
+    parser = argparse.ArgumentParser(
+        description="Prepare images for processing."
+    )
+    parser.add_argument(
+        "--image_dir",
+        type=str,
+        required=True,
+        help="Path to the directory containing input images.",
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        required=True,
+        help="Path to the directory where processed images will be saved.",
+    )
+
+    args = parser.parse_args()
+
+    image_dir = Path(args.image_dir)
+    output_dir = Path(args.output_dir)
+
     filter_images(image_dir, output_dir)

@@ -1,9 +1,9 @@
 from pathlib import Path
 import pytorch_lightning as pl
 
-from src.network import MemeClassifier
-from src.dataloader import ImageDataModule
-from src.utils import load_config
+from mem_or_not.network import MemeClassifier
+from mem_or_not.dataloader import ImageDataModule
+from mem_or_not.utils import load_config
 
 
 def train(config: dict):

@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 from torch.utils.data import DataLoader
-from src.dataloader import ImageDataModule
+from mem_or_not.dataloader import ImageDataModule
 
 
 @pytest.fixture
