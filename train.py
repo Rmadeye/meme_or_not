@@ -3,34 +3,39 @@ import pytorch_lightning as pl
 
 from src.network import MemeClassifier
 from src.dataloader import ImageDataModule
+from src.utils import load_config
 
 
-def train(data_dir: Path):
+def train(config: dict):
     """
     Train the MemeClassifier model.
 
     Args:
-        data_dir (Path): Path to the directory containing the training data.
-        output_dir (Path): Path to the directory where the model will be saved.
+        config (dict): Configuration dictionary containing training parameters.
     """
     model = MemeClassifier()
+    train_cfg = config["train"]
     data_module = ImageDataModule(
-        image_dir=data_dir,
+        meme_dir=Path(train_cfg["meme_dir"]),
+        other_dir=Path(train_cfg["other_dir"]),
+        batch_size=train_cfg["batch_size"],
         transform=True,
-        batch_size=8,
     )
     trainer = pl.Trainer(
-        max_epochs=5,
+        max_epochs=train_cfg["epochs"],
         log_every_n_steps=1,
     )
     trainer.fit(model, datamodule=data_module)
     trainer.test(model, datamodule=data_module)
+    trainer.save_checkpoint(
+        Path(train_cfg["model_dir"]) / "meme_classifier.ckpt"
+    )
 
 
 if __name__ == "__main__":
     output_dir = Path("output")
-    data_dir = Path("data/filtered")
+    config_path = Path("hparams.yaml")
+    config = load_config(config_path)
 
     output_dir.mkdir(parents=True, exist_ok=True)
-
-    train(data_dir)
+    train(config)

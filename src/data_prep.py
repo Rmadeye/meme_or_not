@@ -3,27 +3,8 @@ from typing import Optional
 from pathlib import Path
 from PIL import Image
 import numpy as np
-import torch
 from torchvision import transforms
 from torch.utils.data import Dataset
-
-
-transform = transforms.Compose(
-    [
-        transforms.Resize((256, 256)),
-        transforms.RandomHorizontalFlip(),
-        transforms.RandomRotation(15),
-        transforms.ColorJitter(
-            brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1
-        ),
-        transforms.RandomVerticalFlip(),
-        transforms.RandomAffine(degrees=0, translate=(0.1, 0.1)),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
-        ),
-    ]
-)
 
 
 def load_image(image_path: Path) -> Image.Image:
@@ -34,10 +15,6 @@ def load_image(image_path: Path) -> Image.Image:
             return pil_img.convert("RGB")
     else:
         raise ValueError(f"Unsupported image format: {image_path.suffix}")
-
-
-def transform_to_tensor(image: Image.Image) -> torch.Tensor:
-    return transform(image)
 
 
 class ImageDataset(Dataset):
@@ -51,7 +28,20 @@ class ImageDataset(Dataset):
     ):
         self.transform = (
             transforms.Compose(
-                [transforms.Resize((224, 224)), transforms.ToTensor()]
+                [
+                    transforms.Resize((256, 256)),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.RandomRotation(15),
+                    transforms.ColorJitter(
+                        brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1
+                    ),
+                    transforms.RandomVerticalFlip(),
+                    transforms.RandomAffine(degrees=0, translate=(0.1, 0.1)),
+                    transforms.ToTensor(),
+                    transforms.Normalize(
+                        mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                    ),
+                ]
             )
             if transform
             else None
@@ -96,4 +86,6 @@ class ImageDataset(Dataset):
         if self.transform:
             image = self.transform(image)
 
-        return (image, label) if not self.predict_mode else image
+        return (
+            (image, label) if not self.predict_mode else (image, str(img_path))
+        )

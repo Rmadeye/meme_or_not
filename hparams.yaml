@@ -1,0 +1,10 @@
+# This is a YAML configuration file for a neural network model training setup.
+train:
+  meme_dir: /home/rmadeye/repos/mem_or_not/data/memes
+  other_dir: /home/rmadeye/repos/mem_or_not/data/other
+  model_dir: /home/rmadeye/repos/mem_or_not/models
+  lr: 1e-4
+  epochs: 20
+  random_seed: 666
+  early_stopping: 5
+  batch_size: 16
