@@ -29,8 +29,8 @@ def filter_images(image_dir: Path, output_dir: Path):
                         output_dir / image_path.with_suffix(suffix).name
                     )
         elif image_path.suffix.lower() == ".heic":
-            with open(image_path, "rb"):
-                heif_file = pillow_heif.open_heif(image_path)
+            with open(image_path, "rb") as f:
+                heif_file = pillow_heif.open_heif(f)
                 pil_img = Image.frombytes(
                     heif_file.mode,
                     heif_file.size,
