@@ -8,7 +8,7 @@ import torch
 
 
 class MemeClassifier(pl.LightningModule):
-    def __init__(self, dropout_rate, lr):
+    def __init__(self, dropout_rate=0.0, lr=1e-4):
         super().__init__()
         self.model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
         self.dropout_rate = float(dropout_rate)
