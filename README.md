@@ -1,3 +1,4 @@
+![Python Version](https://img.shields.io/badge/Python-3.10-blue)![PyTorch Version](https://img.shields.io/badge/PyTorch-2.5.1-red)![CUDA Version](https://img.shields.io/badge/CUDA-12.4-green)
 # mem_or_not
 
 `mem_or_not` is a project designed to help users determine whether a given image is a mem or not.
