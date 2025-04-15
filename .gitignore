@@ -1,0 +1,10 @@
+no_commit
+__pycache__*
+.vscode
+*.pyc
+.mypy*
+data/
+output*
+.coverage*
+*logs*
+models/meme_classifier.ckpt
