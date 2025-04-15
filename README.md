@@ -17,7 +17,7 @@
 4. Prepare your images.
 `python -m scripts.prepare_images --image_dir <your_dir> --output_dir <dir_of_your_choice>`
 
-5. Download my ResNet50-based model and save it to models directory: https://drive.google.com/file/d/1UZxUk2Lb3UG-2Ca7Pn6yjPjmyliT_68j/view?usp=drive_link
+5. Download my ResNet50-based model and save it to models directory: https://drive.proton.me/urls/HQZJV8J2P4#1OPYjFib1mNH
 
 Prediction whether it is meme or not is done using `predict.py` script.
 
