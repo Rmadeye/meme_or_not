@@ -22,14 +22,13 @@ def train(config: dict):
         transform=True,
     )
     trainer = pl.Trainer(
-        max_epochs=train_cfg["epochs"],
-        log_every_n_steps=1,
+        max_epochs=train_cfg["epochs"], log_every_n_steps=1, fast_dev_run=True
     )
     trainer.fit(model, datamodule=data_module)
     trainer.test(model, datamodule=data_module)
-    trainer.save_checkpoint(
-        Path(train_cfg["model_dir"]) / "meme_classifier.ckpt"
-    )
+    # trainer.save_checkpoint(
+    #     Path(train_cfg["model_dir"]) / "meme_classifier.ckpt"
+    # )
 
 
 if __name__ == "__main__":

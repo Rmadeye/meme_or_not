@@ -20,7 +20,9 @@ def mock_image_data_module(mock_image_dataset, monkeypatch):
     def mock_image_dataset_init(*args, **kwargs):
         return mock_image_dataset
 
-    monkeypatch.setattr("src.dataloader.ImageDataset", mock_image_dataset_init)
+    monkeypatch.setattr(
+        "mem_or_not.dataloader.ImageDataset", mock_image_dataset_init
+    )
     image_dir = Path("data/filtered")
     return ImageDataModule(image_dir, batch_size=8)
 

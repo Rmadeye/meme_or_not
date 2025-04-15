@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "mem_or_not"
 version = "0.1.0"
-description = "A small project for detection of memes in images."
+description = "A tool for detecting memes in image sets."
 authors = ["Rafał Madaj"]
 license = "MIT"
 readme = "README.md"

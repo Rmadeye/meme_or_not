@@ -1,6 +1,7 @@
 from typing import Optional
 
 from pathlib import Path
+import PIL
 from PIL import Image
 import numpy as np
 from torchvision import transforms
@@ -8,13 +9,13 @@ from torch.utils.data import Dataset
 
 
 def load_image(image_path: Path) -> Image.Image:
-    if image_path.suffix in [".jpg", ".jpeg", ".png"]:
+    try:
         with Image.open(image_path) as img:
             array = np.array(img)
             pil_img = Image.fromarray(array)
             return pil_img.convert("RGB")
-    else:
-        raise ValueError(f"Unsupported image format: {image_path.suffix}")
+    except PIL.UnidentifiedImageError:
+        return None
 
 
 class ImageDataset(Dataset):
@@ -46,35 +47,25 @@ class ImageDataset(Dataset):
             if transform
             else None
         )
-
+        self.meme_dir = meme_dir
+        self.other_dir = other_dir
+        self.predict_dir = predict_dir
         self.predict_mode = predict_mode
         self.data: list = []
+        self._load_data()
 
-        if predict_dir is None:
-            assert meme_dir and other_dir
-            self.meme_dir = meme_dir
-            self.other_dir = other_dir
-            self._load_training_data()
-        else:
-            assert meme_dir is None and other_dir is None
-            self.predict_dir = predict_dir
-            self._load_prediction_data()
-
-    def _load_training_data(self):
-        for img_path in self.meme_dir.glob("*.*"):
-            if img_path.suffix.lower() in [".jpg", ".jpeg", ".png", ".webp"]:
-                self.data.append((img_path, 1))  # Label 1 for meme images
-
-        for img_path in self.other_dir.glob("*.*"):
-            if img_path.suffix.lower() in [".jpg", ".jpeg", ".png", ".webp"]:
-                self.data.append((img_path, 0))  # Label 0 for other images
-
-    def _load_prediction_data(self):
-        for img_path in self.predict_dir.glob("*.*"):
-            if img_path.suffix.lower() in [".jpg", ".jpeg", ".png", ".webp"]:
+    def _load_data(self):
+        if self.predict_mode:
+            for img_path in self.predict_dir.glob("*.*"):
                 self.data.append(
                     (img_path, None)
                 )  # No labels for prediction mode
+        else:
+            for img_path in self.meme_dir.glob("*.*"):
+                self.data.append((img_path, 1))  # Label 1 for meme images
+
+            for img_path in self.other_dir.glob("*.*"):
+                self.data.append((img_path, 0))  # Label 0 for other images
 
     def __len__(self):
         return len(self.data)
@@ -82,6 +73,9 @@ class ImageDataset(Dataset):
     def __getitem__(self, idx):
         img_path, label = self.data[idx]
         image = load_image(img_path)
+        if image is None:
+            self.data.pop(idx)
+            return self.__getitem__(idx)
 
         if self.transform:
             image = self.transform(image)

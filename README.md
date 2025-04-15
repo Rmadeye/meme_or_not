@@ -22,4 +22,4 @@ Prediction whether it is meme or not is done using `predict.py` script.
 
 `python predict.py --image_dir <dir_of_your_choice> --model_path models/meme_classifier.ckpt`
 
-At this point an  information about each image - whether it is meme and how probable is that - is shown in your terminal.
+At this point, information about each image - whether it is a meme - along with the confidence, is shown in your terminal.
