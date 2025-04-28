@@ -8,7 +8,6 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 def plot_confusion_matrix(cm, labels, title="Confusion Matrix"):
     fig, ax = plt.subplots(figsize=(10, 7))
-    plt.figure(figsize=(10, 7))
     sns.heatmap(
         cm,
         annot=True,
